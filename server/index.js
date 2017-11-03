@@ -57,7 +57,14 @@ app.get('/', xHeader, (req, res) => {
 });
 
 app.get('/new', xHeader, (req, res) => {
-  res.sendStatus(200);
+  let data = {
+    names: [],
+    credits: game.player.credits
+  };
+  for (let key in game.incomeManager.properties) {
+    data.names.push(game.incomeManager.properties[key]);
+  }
+  res.send(data);
 });
 
 app.get('/player', xHeader, (req, res) => {

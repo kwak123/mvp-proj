@@ -1,18 +1,21 @@
 import React from 'react';
 import axios from 'axios';
 import NewPlayer from './NewPlayer.jsx';
+import Control from './Control.jsx';
 
 class Game extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      player: {},
+      player: null,
       credits: 0,
-      gameStart: false
+      gameStart: false,
+      names: []
     };
     this.startNewGame = this.startNewGame.bind(this);
     this.setPlayerData = this.setPlayerData.bind(this);
+    this.handlePurchase = this.handlePurchase.bind(this);
   }
 
   startNewGame() {
@@ -27,29 +30,34 @@ class Game extends React.Component {
       species: data.species
     })
     .then((response) => {
-      return axios.get('http:localhost:3001/player');
+      return axios.get('http:localhost:3001/new');
     })
-    .then((data) => {
-      console.log(data);
+    .then((response) => {
+      this.setState({
+        player: data,
+        names: response.data.names,
+        credits: response.data.credits
+      });
     })
     .catch((err) => console.log(err));
-    this.setState({
-      player: data
-    });
-    console.log(data);
+  }
+
+  handlePurchase(property) {
+
   }
 
   render() {
     let newGameButton = this.state.gameStart ? null : <button onClick={this.startNewGame}>New Game</button>
-    let playerInfo = Object.keys(this.state.player).length ? (
-      <div>
-        <p>Name: {this.state.player.username}</p><p>Species: {this.state.player.species}</p><p>Credits: {this.state.credits}</p>
-      </div>
-    ) : null;
+    let newPlayer = this.state.gameStart ? <NewPlayer species={this.props.species} handleSubmit={this.setPlayerData}/> : null;
     return (
       <div>
-        {this.state.gameStart && <NewPlayer species={this.props.species} handleSubmit={this.setPlayerData}/>}
-        {playerInfo}        
+        {newPlayer}
+        {this.state.player && 
+          <Control 
+            player={this.state.player} 
+            credits={this.state.credits} 
+            handlePurchase={this.handlePurchase} 
+            names={this.state.names} />}   
         {newGameButton}
       </div>
     )

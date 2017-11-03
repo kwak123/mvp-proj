@@ -1,9 +1,10 @@
 var Player = require('./Player');
+var IncomeManager = require('./income/IncomeManager');
 
 module.exports = class Game {
   constructor(username, species) {
     this.player = new Player(username, species);
-    this.incomeGenerators = [];
+    this.incomeManager = new IncomeManager();
   }
 
   setShip(ship) {
@@ -20,8 +21,8 @@ module.exports = class Game {
   }
 
   calculateTick() {
-    let income = incomeGenerators.reduce((a, b) => a + b.income, 0);
-    this.player.credits += income;
+    // let income = incomeGenerators.reduce((a, b) => a + b.income, 0);
+    // this.player.credits += income;
   }
 
 }

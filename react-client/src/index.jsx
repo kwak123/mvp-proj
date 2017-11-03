@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Game from './components/Game.jsx';
-import Info from './components/Info.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +30,7 @@ class App extends React.Component {
   render () {
     return (
     <div>
-      <h1>Star Hwars (Don't sue me Disney)</h1>
+      <h1>Star Swars (Don't sue me Disney)</h1>
       <Game species={this.state.species} />
     </div>)
   }

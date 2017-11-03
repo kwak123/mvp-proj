@@ -5,7 +5,8 @@ module.exports = class IncomeManager {
     this.properties = {
       SOLAR_FARM: 'SolarFarms',
       SPICE_FACTORY: 'SpiceFactories',
-      SMUGGLER_DEN: 'SmugglerDens'
+      SMUGGLER_DEN: 'SmugglerDens',
+      KINGPIN_SEAMUS: 'KingpinSeamus'
     };
     this.incomeGenerators = {
       SolarFarms: {
@@ -27,6 +28,13 @@ module.exports = class IncomeManager {
         count: 0,
         cost: 4000000,
         output: 2000,
+        modifier: 1.0
+      },      
+      KingpinSeamus: {
+        level: 1,
+        count: 0,
+        cost: 3000000000,
+        output: 1,
         modifier: 1.0
       }
     };
