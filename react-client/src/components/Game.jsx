@@ -8,7 +8,7 @@ class Game extends React.Component {
     super(props);
     this.state = {
       player: {},
-      credits: -1,
+      credits: 0,
       gameStart: false
     };
     this.startNewGame = this.startNewGame.bind(this);
@@ -30,26 +30,26 @@ class Game extends React.Component {
       return axios.get('http:localhost:3001/player');
     })
     .then((data) => {
-
+      console.log(data);
     })
     .catch((err) => console.log(err));
     this.setState({
       player: data
     });
+    console.log(data);
   }
 
   render() {
     let newGameButton = this.state.gameStart ? null : <button onClick={this.startNewGame}>New Game</button>
-    let playerInfo = this.player ? null : (
+    let playerInfo = Object.keys(this.state.player).length ? (
       <div>
-        <p>{this.state.player.username}</p>
-        <p>{this.state.player.species}</p>
-        <p>{this.state.credits}</p>
+        <p>{this.state.player.username}</p><p>{this.state.player.species}</p><p>{this.state.credits}</p>
       </div>
-    )
+    ) : null;
     return (
       <div>
         {this.state.gameStart && <NewPlayer species={this.props.species} handleSubmit={this.setPlayerData}/>}
+        {playerInfo}        
         {newGameButton}
       </div>
     )

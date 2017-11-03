@@ -30,10 +30,11 @@ class NewPlayer extends React.Component {
       <div>
         <h3>Player Data</h3>
         <input type="text" onChange={this.onNameChange} value={this.state.username}></input>
-        <select value={this.state.species || 'Select a species'} onChange={this.onSpeciesChange}>
+        <select value={this.state.species} onChange={this.onSpeciesChange}>
+          <option value=''>Select a species</option>
           {this.props.species.map((s, i) => <option key={i} value={s.name}>{s.name}</option>)}
         </select>
-        <button onClick={this.props.handleSubmit}>Submit</button>
+        <button onClick={() => this.props.handleSubmit(this.state)}>Submit</button>
       </div>
     );
   }
