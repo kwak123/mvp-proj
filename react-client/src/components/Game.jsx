@@ -43,7 +43,7 @@ class Game extends React.Component {
     let newGameButton = this.state.gameStart ? null : <button onClick={this.startNewGame}>New Game</button>
     let playerInfo = Object.keys(this.state.player).length ? (
       <div>
-        <p>{this.state.player.username}</p><p>{this.state.player.species}</p><p>{this.state.credits}</p>
+        <p>Name: {this.state.player.username}</p><p>Species: {this.state.player.species}</p><p>Credits: {this.state.credits}</p>
       </div>
     ) : null;
     return (

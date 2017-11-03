@@ -11,6 +11,7 @@ class NewPlayer extends React.Component {
     }
     this.onNameChange = this.onNameChange.bind(this);
     this.onSpeciesChange = this.onSpeciesChange.bind(this);
+    this.verifyData = this.verifyData.bind(this);
   }
 
   onNameChange(e) {
@@ -25,6 +26,14 @@ class NewPlayer extends React.Component {
     });
   }
 
+  verifyData(e) {
+    if (this.state.username && this.state.species) {
+      this.props.handleSubmit(this.state);
+    } else {
+      alert('Please submit valid user data');
+    }
+  }
+
   render() {
     return (
       <div>
@@ -34,7 +43,7 @@ class NewPlayer extends React.Component {
           <option value=''>Select a species</option>
           {this.props.species.map((s, i) => <option key={i} value={s.name}>{s.name}</option>)}
         </select>
-        <button onClick={() => this.props.handleSubmit(this.state)}>Submit</button>
+        <button onClick={() => this.verifyData()}>Submit</button>
       </div>
     );
   }

@@ -32,8 +32,7 @@ class App extends React.Component {
     return (
     <div>
       <h1>Star Hwars (Don't sue me Disney)</h1>
-      <Game species={this.state.species}/>
-      <Info species={this.state.species} />
+      <Game species={this.state.species} />
     </div>)
   }
 }
