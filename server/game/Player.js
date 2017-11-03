@@ -7,10 +7,6 @@ module.exports = class Player {
     this.alive = true;
   }
 
-  modCredits(mod) {
-    this.credits += mod;
-  }
-
   setShip(ship) {
     this.ship = ship;
   }

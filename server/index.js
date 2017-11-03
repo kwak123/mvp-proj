@@ -81,9 +81,18 @@ app.post('/player', xHeader, (req, res) => {
   res.sendStatus(200);
 });
 
-app.post('/increment', xHeader, (req, res) => {
-  res.end();
+app.post('/purchase', xHeader, (req, res) => {
+  let property = req.body.property;
+  let cost = game.incomeManager.fetchCost(property);
+  let test = game.spendCredits(-cost);
+  if (test) {
+    game.incomeManager.purchase(property);
+    res.send('success');    
+  } else {
+    res.send('fail');
+  }
 });
+
 app.options('/*', xHeader, (req, res) => {
   res.sendStatus(200);
 });

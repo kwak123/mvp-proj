@@ -12,10 +12,10 @@ module.exports = class Game {
   }
 
   spendCredits(mod) {
-    if (this.player.credits - mod < 0) {
+    if (this.player.credits + mod < 0) {
       return false;
     } else {
-      this.player.credits -= mod;
+      this.player.credits += mod;
       return true;
     }
   }
