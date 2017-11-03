@@ -12,11 +12,12 @@ class Game extends React.Component {
       credits: 0,
       gameStart: false,
       hideNewPlayer: true,
-      names: []
+      generators: []
     };
     this.startNewGame = this.startNewGame.bind(this);
     this.setPlayerData = this.setPlayerData.bind(this);
     this.handlePurchase = this.handlePurchase.bind(this);
+    this.runTick = this.runTick.bind(this);
   }
 
   startNewGame() {
@@ -37,7 +38,7 @@ class Game extends React.Component {
     .then((response) => {
       this.setState({
         player: data,
-        names: response.data.names,
+        generators: response.data.generators,
         credits: response.data.credits,
         hideNewPlayer: true
       });
@@ -50,26 +51,36 @@ class Game extends React.Component {
       property: property
     })
     .then((response) => {
+      if (!response.data.successful) { alert(`you can't afford ${property}`); }
+      let currGen = this.state.generators.slice();
+      currGen.find((a) => a.name === property).count = response.data.count;
       this.setState({
-        credits: response.data.credits || 0
+        credits: response.data.credits || 0,
+        generators: currGen
       });
     })
     .catch((err) => console.log(err));
   }
 
+  runTick() {
+
+  }
+
   render() {
     let newGameButton = this.state.gameStart ? null : <button onClick={this.startNewGame}>New Game</button>;
     let newPlayer = this.state.hideNewPlayer ? null : <NewPlayer species={this.props.species} handleSubmit={this.setPlayerData}/>;
+
     return (
       <div>
+        {newGameButton}        
         {newPlayer}
         {this.state.player && 
           <Control 
             player={this.state.player} 
             credits={this.state.credits} 
             handlePurchase={this.handlePurchase} 
-            names={this.state.names} />}   
-        {newGameButton}
+            generators={this.state.generators} />}   
+        {this.state.gameStart && this.state.hideNewPlayer ? <button onClick={this.runTick}>End turn</button> : null}
       </div>
     )
   }

@@ -58,11 +58,15 @@ app.get('/', xHeader, (req, res) => {
 
 app.get('/new', xHeader, (req, res) => {
   let data = {
-    names: [],
+    generators: [],
     credits: game.player.credits
   };
   for (let key in game.incomeManager.properties) {
-    data.names.push(game.incomeManager.properties[key]);
+    let holder = {};
+    let name = game.incomeManager.properties[key];
+    holder.name = name;
+    holder.count = game.incomeManager.incomeGenerators[name].count;
+    data.generators.push(holder);
   }
   res.send(data);
 });
@@ -85,15 +89,15 @@ app.post('/purchase', xHeader, (req, res) => {
   let property = req.body.property;
   let cost = game.incomeManager.fetchCost(property);
   let test = game.spendCredits(-cost);
-  if (test) {
-    game.incomeManager.purchase(property);
-    let data = {
-      credits: game.player.credits
-    };
-    res.send(data);
-  } else {
-    res.send('fail');
-  }
+  console.log(test);
+  if (test) { game.incomeManager.purchase(property); }
+  let data = {
+    credits: game.player.credits,
+    property: property,
+    count: game.incomeManager.incomeGenerators[property].count,
+    successful: test
+  };
+  res.send(data);
 });
 
 app.options('/*', xHeader, (req, res) => {

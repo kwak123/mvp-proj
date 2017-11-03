@@ -2,7 +2,7 @@ import React from 'react';
 
 var PlayerInfo = (props) => {
   return (
-    <div>
+    <div style={{'float':'left'}}>
       <ul>
         <li>Name: {props.player.username}</li>
         <li>Species: {props.player.species}</li>
