@@ -50,7 +50,9 @@ class Game extends React.Component {
       property: property
     })
     .then((response) => {
-      console.log(response);
+      this.setState({
+        credits: response.data.credits || 0
+      });
     })
     .catch((err) => console.log(err));
   }

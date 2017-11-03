@@ -87,7 +87,10 @@ app.post('/purchase', xHeader, (req, res) => {
   let test = game.spendCredits(-cost);
   if (test) {
     game.incomeManager.purchase(property);
-    res.send('success');    
+    let data = {
+      credits: game.player.credits
+    };
+    res.send(data);
   } else {
     res.send('fail');
   }
