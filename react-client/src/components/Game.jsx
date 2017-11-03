@@ -63,7 +63,12 @@ class Game extends React.Component {
   }
 
   runTick() {
-
+    axios.post('http:localhost:3001/runtick')
+      .then((response) => {
+        this.setState({
+          credits: response.data.credits
+        });
+      });
   }
 
   render() {

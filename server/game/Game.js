@@ -21,8 +21,7 @@ module.exports = class Game {
   }
 
   calculateTick() {
-    // let income = incomeGenerators.reduce((a, b) => a + b.income, 0);
-    // this.player.credits += income;
+    this.player.credits += this.incomeManager.calculateIncome();
   }
 
 }

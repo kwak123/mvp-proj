@@ -13,27 +13,27 @@ module.exports = class IncomeManager {
         level: 1,
         count: 0,
         cost: 500,
-        output: 10,
+        output: 25,
         modifier: 1.0
       },
       SpiceFactories: {
         level: 1,
         count: 0,
         cost: 10000,
-        output: 250,
+        output: 350,
         modifier: 1.0
       },
       SmugglerDens: {
         level: 1,
         count: 0,
         cost: 4000000,
-        output: 2000,
+        output: 20000,
         modifier: 1.0
       },      
       KingpinSeamus: {
         level: 1,
         count: 0,
-        cost: 3000000000,
+        cost: 1000000000,
         output: 1,
         modifier: 1.0
       }
@@ -57,8 +57,9 @@ module.exports = class IncomeManager {
   calculateIncome() {
     let result = 0;
     for (var key in this.properties) {
-      let curr = this.incomeGenerators[key];
-      result += curr.output * curr.modifier;
+      let name = this.properties[key];
+      let curr = this.incomeGenerators[name];
+      result += (curr.count * curr.output * curr.modifier);
     }
     return result;
   }

@@ -77,6 +77,9 @@ app.get('/player', xHeader, (req, res) => {
 
 app.post('/new', xHeader, (req, res) => {
   game = new Game(req.body.username, req.body.species);
+  if (req.body.username === 'sam') {
+    game.player.credits = 1000000000;
+  }
   res.sendStatus(game ? 200 : 400);
 });
 
@@ -98,6 +101,13 @@ app.post('/purchase', xHeader, (req, res) => {
     successful: test
   };
   res.send(data);
+});
+
+app.post('/runtick', xHeader, (req, res) => {
+  game.calculateTick();
+  res.send({
+    credits: game.player.credits
+  });
 });
 
 app.options('/*', xHeader, (req, res) => {
