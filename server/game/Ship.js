@@ -1,4 +1,4 @@
-var BaseHardpoint = require('./hardpoints/BaseHardpoint');
+var Engine = require('./hardpoints/modules/Engine')
 
 module.exports = class Ship {
   constructor({ length, hyperdrive, cost, mglt, name }) {
@@ -6,12 +6,11 @@ module.exports = class Ship {
     this.maxShields = this.maxHealth * hyperdrive;
     this.health = this.maxHealth;
     this.shields = this.maxShields;
-    this.maxHardpoints = Math.max(5, Math.cbrt(length));
+    this.engine = new Engine();
     this.cost = cost;
-    this.mglt = mglt;
+    this.base = mglt;
+    this.mglt = this.base * this.engine.effect;
     this.name = name;
-    this.pilot;
-    this.hardpoints = {};
     this.functional = true;
   }
 
@@ -41,31 +40,13 @@ module.exports = class Ship {
     this.pilot = pilot;
   }
 
-  addHardpoint(hardpoint) {
-    if (hardpoint instanceof BaseHardpoint) {
-      if (this.hardpoints.length < this.maxHardpoints) {
-        this.hardpoints[hardpoint.name] = hardpoint;
-        return true;
-      } 
-    }
-    return false;
+  fetchEngineCost() {
+    return this.engine.levelUpCost;
   }
 
-  deleteHardpoint(hardpoint) {
-    if (this.hardpoints.hasOwnProperty(hardpoint.name)) {
-      delete this.hardpoints[hardpoint.name];
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getHardpoints() {
-    let result = [];
-    for (let key in this.hardpoints) {
-      result.push(this.hardpoints[key].name);
-    }
-    return result;
+  levelUpEngine() {
+    this.engine.levelUp();
+    this.mglt = Math.floor(this.base * this.engine.effect);
   }
 
   repair() {

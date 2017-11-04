@@ -1,4 +1,4 @@
-var app = require('express')();
+var express = require('express');
 var http = require('http');
 var bodyparser = require('body-parser');
 var request = require('request');
@@ -29,10 +29,11 @@ let xHeader = (req, res, next) => {
   next();
 }
 
+var app = express();
+
 // Middleware
 app.use(logger);
 app.use(bodyparser.json());
-// app.use(express.static('../react-client/src'));
 
 // app.use(express.static(path.resolve(__dirname, './client))); DO THIS LATER
 
@@ -121,6 +122,18 @@ app.post('/levelup', xHeader, (req, res) => {
     successful: test
   }
   res.send(data);
+});
+
+// Would change this to allow for adding hardpoints
+app.post('/engine', xHeader, (req, res) => {
+  let cost = game.starship.fetchEngineCost();
+  let test = game.spendCredits(-cost);
+  if (test) { game.starship.levelUpEngine(); }
+  res.send({
+    credits: game.player.credits,
+    starship: game.starship,
+    successful: test
+  })
 });
 
 app.post('/runtick', xHeader, (req, res) => {

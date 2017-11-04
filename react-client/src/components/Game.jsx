@@ -29,7 +29,7 @@ class Game extends React.Component {
     this.handlePurchase = this.handlePurchase.bind(this);
     this.handleLevelup = this.handleLevelup.bind(this);
     this.handleShipPurchase = this.handleShipPurchase.bind(this);
-    this.handleModulePurchase = this.handleModulePurchase.bind(this);
+    this.handleEnginePurchase = this.handleEnginePurchase.bind(this);
     this.runTick = this.runTick.bind(this);
   }
 
@@ -112,8 +112,16 @@ class Game extends React.Component {
     .catch((err) => console.log(err));
   }
 
-  handleModulePurchase() {
-    
+  handleEnginePurchase() {
+    axios.post(defaults.BASE_URL + '/engine')
+    .then((response) => {
+      if (!response.data.successful) { alert(`you can't afford engine up`); }
+      this.setState({
+        credits: response.data.credits,
+        starship: response.data.starship
+      });
+    })
+    .catch((err) => console.log(err));
   }
 
   runTick() {
@@ -142,7 +150,7 @@ class Game extends React.Component {
         handlePurchase={this.handlePurchase}
         handleLevelup={this.handleLevelup} 
         handleShipPurchase={this.handleShipPurchase}
-        handleModulePurchase={this.handleModulePurchase}
+        handleEnginePurchase={this.handleEnginePurchase}
         generators={this.state.generators}
         starships={this.props.starships} /> : null;
     let main = this.state.player ?

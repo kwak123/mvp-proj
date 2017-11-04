@@ -22,6 +22,10 @@ var PlayerInfo = (props) => {
         <li style={liStyle}>Credits: {props.credits}</li>
         <li style={liStyle}>Starship: {props.starship.name}</li>
         <li style={liStyle}>Speed: {props.starship.mglt}</li>
+        <li style={liStyle}>
+          <p>Engine level: {props.starship.engine.level} - Cost: {props.starship.engine.levelUpCost}</p>
+          <button onClick={props.handleEnginePurchase}>Level up engine</button>
+        </li>
         <select value={props.starship} onChange={handleChange}>
           <option value=''>Select a ship</option>
           {props.starships.map((a, i) => <option key={i} value={a.name}>{a.name} - cost: {a.cost} speed: {a.mglt}</option>)}

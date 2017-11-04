@@ -9,7 +9,8 @@ var Control = (props) => (
         credits={props.credits} 
         starship={props.starship}
         starships={props.starships}
-        handleShipPurchase={props.handleShipPurchase} />
+        handleShipPurchase={props.handleShipPurchase} 
+        handleEnginePurchase={props.handleEnginePurchase} />
       <IncomeManager 
         handlePurchase={props.handlePurchase} 
         handleLevelup={props.handleLevelup}
