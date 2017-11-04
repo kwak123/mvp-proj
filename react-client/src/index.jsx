@@ -15,7 +15,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3001/')
+    axios.get('/galaxy')
       .then(({ data }) => {
         this.setState({
           planets: data.planets,

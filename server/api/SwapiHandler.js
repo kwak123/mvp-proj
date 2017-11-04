@@ -23,12 +23,12 @@ module.exports = {
     return new Promise((resolve, reject) => {
       resolve(JSON.stringify(testData.starships));
       // request.get(params.getStarshipsUrl(pageNum))
-        // .on('response', (response) => {
-        //   let cache = '';
-        //   response.on('data', (data) => cache += data);
-        //   response.on('end', () => resolve(cache.toString()));
-        // })
-        // .on('error', reject);
+      //   .on('response', (response) => {
+      //     let cache = '';
+      //     response.on('data', (data) => cache += data);
+      //     response.on('end', () => resolve(cache.toString()));
+      //   })
+      //   .on('error', reject);
     });
   },
 

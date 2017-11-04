@@ -41,12 +41,12 @@ class Game extends React.Component {
   }
 
   setPlayerData(data) {
-    axios.post(defaults.BASE_URL + '/new', {
+    axios.post('/new', {
       username: data.username,
       species: data.species
     })
     .then((response) => {
-      return axios.get(defaults.BASE_URL + '/new');
+      return axios.get('/new');
     })
     .then((response) => {
       this.setState({
@@ -64,7 +64,7 @@ class Game extends React.Component {
   }
 
   handlePurchase(property) {
-    axios.post(defaults.BASE_URL + '/purchase', {
+    axios.post('/purchase', {
       property: property
     })
     .then((response) => {
@@ -81,7 +81,7 @@ class Game extends React.Component {
 
   handleLevelup(property) {
     if (property === 'KingpinSeamus') { return alert('... why'); }
-    axios.post(defaults.BASE_URL + '/levelup', {
+    axios.post('/levelup', {
       property: property
     })
     .then((response) => {
@@ -99,7 +99,7 @@ class Game extends React.Component {
   }
 
   handleShipPurchase(shipName) {
-    axios.post(defaults.BASE_URL + '/starship', {
+    axios.post('/starship', {
       name: shipName
     })
     .then((response) => {
@@ -113,7 +113,7 @@ class Game extends React.Component {
   }
 
   handleEnginePurchase() {
-    axios.post(defaults.BASE_URL + '/engine')
+    axios.post('/engine')
     .then((response) => {
       if (!response.data.successful) { alert(`you can't afford engine up`); }
       this.setState({
@@ -125,7 +125,7 @@ class Game extends React.Component {
   }
 
   runTick() {
-    axios.post(defaults.BASE_URL + '/runtick')
+    axios.post('/runtick')
       .then((response) => {
         this.setState({
           credits: response.data.credits,
@@ -170,13 +170,16 @@ class Game extends React.Component {
         {newGameButton}        
         {newPlayer}
         {main}
-        {control}  
         <div style={{'float': 'left', 'margin': '4px 4px 4px 8px'}}>
+          {control}
+          <div style={{'marginTop': -10}}>
           {this.state.gameStart && this.state.hideNewPlayer ? 
             <button onClick={this.runTick}>End turn</button> : null}
           {this.state.gameStart && this.state.hideNewPlayer ? 
             <p>Turns: {this.state.turns}</p> : null}
-        </div>
+          </div>
+        </div>  
+        
         
       </div>
     )

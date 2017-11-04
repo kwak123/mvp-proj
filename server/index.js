@@ -9,6 +9,7 @@ var environment = require('./game/Environment');
 var initialize = require('./initialize');
 var Game = require('./game/Game');
 var Ship = require('./game/Ship');
+var db = require('./db/config');
 
 // Default headers
 const HEADER = {
@@ -34,6 +35,7 @@ var app = express();
 // Middleware
 app.use(logger);
 app.use(bodyparser.json());
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // app.use(express.static(path.resolve(__dirname, './client))); DO THIS LATER
 
@@ -49,7 +51,7 @@ let game;
 app.get('/favicon', (req, res) => res.sendStatus(200));
 
 // GET requests
-app.get('/', xHeader, (req, res) => {
+app.get('/galaxy', xHeader, (req, res) => {
   let galaxy = { 
     planets: environment.PLANETS, 
     starships: environment.STARSHIPS, 
@@ -57,6 +59,10 @@ app.get('/', xHeader, (req, res) => {
     species: environment.SPECIES
   };
   res.send(galaxy);
+});
+
+app.get('/bundle.js', xHeader, (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/bundle.js'));
 });
 
 app.get('/new', xHeader, (req, res) => {
