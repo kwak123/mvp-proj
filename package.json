@@ -18,6 +18,12 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.0",
+    "node": "^9.0.0",
+    "path": "^0.12.7",
+    "request": "^2.83.0",
     "axios": "^0.17.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
