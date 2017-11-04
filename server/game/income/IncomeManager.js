@@ -43,7 +43,11 @@ module.exports = class IncomeManager {
   levelUp(property) {
     this.incomeGenerators[property].level++;
     this.incomeGenerators[property].modifier += .1;
-    return this.incomeGenerators[property].level++;
+  }
+
+  fetchLevelUpCost(property) {
+    let prop = this.incomeGenerators[property];
+    return prop.level * prop.cost / 2;
   }
 
   purchase(property) {
@@ -51,7 +55,18 @@ module.exports = class IncomeManager {
   }
 
   fetchCost(property) {
-    return this.incomeGenerators[property].cost * this.incomeGenerators[property].level;
+    return this.incomeGenerators[property].cost;
+  }
+
+  fetchGenerators() {
+    let result = [];
+    for (let key in this.properties) {
+      let data = {};
+      data.name = this.properties[key];
+      data.count = this.incomeGenerators[this.properties[key]].count;
+      result.push(data);
+    }
+    return result;
   }
 
   calculateIncome() {
@@ -59,7 +74,7 @@ module.exports = class IncomeManager {
     for (var key in this.properties) {
       let name = this.properties[key];
       let curr = this.incomeGenerators[name];
-      result += (curr.count * curr.output * curr.modifier);
+      result += Math.floor(curr.count * curr.output * curr.modifier);
     }
     return result;
   }

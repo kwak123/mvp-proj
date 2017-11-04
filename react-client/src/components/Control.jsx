@@ -4,8 +4,14 @@ import IncomeManager from './IncomeManager.jsx';
 
 var Control = (props) => (
     <div>
-      <PlayerInfo player={props.player} credits={props.credits}/>
-      <IncomeManager handlePurchase={props.handlePurchase} generators={props.generators}/>
+      <PlayerInfo 
+        player={props.player} 
+        credits={props.credits} 
+        starship={props.starship}/>
+      <IncomeManager 
+        handlePurchase={props.handlePurchase} 
+        handleLevelup={props.handleLevelup}
+        generators={props.generators}/>
     </div>
 );
 

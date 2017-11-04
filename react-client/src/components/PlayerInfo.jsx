@@ -7,6 +7,7 @@ var PlayerInfo = (props) => {
         <li>Name: {props.player.username}</li>
         <li>Species: {props.player.species}</li>
         <li>Credits: {props.credits}</li>
+        <li>Starship: {props.starship}</li>
       </ul>
     </div>
   );

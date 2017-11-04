@@ -1,7 +1,7 @@
 var BaseHardpoint = require('./hardpoints/BaseHardpoint');
 
 module.exports = class Ship {
-  constructor(length, hyperdrive, cost, mglt, name) {
+  constructor({ length, hyperdrive, cost, mglt, name }) {
     this.maxHealth = length * 100;
     this.maxShields = this.maxHealth * hyperdrive;
     this.health = this.maxHealth;

@@ -7,9 +7,17 @@ class Main extends React.Component {
   }
 
   render() {
+    let divStyle = {
+      'height': 120
+    }
     return (
-      <div>
+      <div style={divStyle}>
+        <h1>Remaining distance</h1>
+        <p>{this.props.planet}</p>
+        <p>{this.props.distance}</p>
       </div>
     )
   }
 }
+
+export default Main;

@@ -6,11 +6,14 @@ describe('Game units', function() {
     let newShip;
 
     beforeEach(function() {
-      let length = 10;
-      let hyperdrive = 1;
-      let cost = 1000;
-      let mglt = 100;
-      newShip = new Ship(length, hyperdrive, cost, mglt);
+      let shipVars = {
+        length: 10,
+        hyperdrive: 1,
+        cost: 1000,
+        mglt: 100,
+        name: 'test'
+      }
+      newShip = new Ship(shipVars);
     });
 
     it('should have max health/shield, health/shield, cost, and MGLT', function() {

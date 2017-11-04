@@ -31,6 +31,7 @@ let xHeader = (req, res, next) => {
 // Middleware
 app.use(logger);
 app.use(bodyparser.json());
+// app.use(express.static('../react-client/src'));
 
 // app.use(express.static(path.resolve(__dirname, './client))); DO THIS LATER
 
@@ -57,18 +58,7 @@ app.get('/', xHeader, (req, res) => {
 });
 
 app.get('/new', xHeader, (req, res) => {
-  let data = {
-    generators: [],
-    credits: game.player.credits,
-    turns: game.turns
-  };
-  for (let key in game.incomeManager.properties) {
-    let holder = {};
-    let name = game.incomeManager.properties[key];
-    holder.name = name;
-    holder.count = game.incomeManager.incomeGenerators[name].count;
-    data.generators.push(holder);
-  }
+  let data = game.fetchData();
   res.send(data);
 });
 
@@ -77,7 +67,7 @@ app.get('/player', xHeader, (req, res) => {
 });
 
 app.post('/new', xHeader, (req, res) => {
-  game = new Game(req.body.username, req.body.species);
+  game = new Game(req.body.username, req.body.species, environment.PLANETS[0]);
   if (req.body.username === 'sam') {
     game.player.credits = 1000000000;
   }
@@ -87,6 +77,17 @@ app.post('/new', xHeader, (req, res) => {
 // Handle saving player some day
 app.post('/player', xHeader, (req, res) => {
   res.sendStatus(200);
+});
+
+app.post('/starship', xHeader, (req, res) => {
+  let newShipName = req.body.name;
+  let ship = environment.STARSHIPS.find((a) => a.name === newShipName);
+  let test = game.spendCredits(-1*(ship.cost)) >= 0;
+  if (test) { game.starship = ship; }
+  res.send({
+    starship: game.starship,
+    successful: !!test
+  });
 });
 
 app.post('/purchase', xHeader, (req, res) => {
@@ -103,11 +104,26 @@ app.post('/purchase', xHeader, (req, res) => {
   res.send(data);
 });
 
+app.post('/levelup', xHeader, (req, res) => {
+  let property = req.body.property;
+  let cost = game.incomeManager.fetchLevelUpCost(property);
+  let test = game.spendCredits(-cost);
+  if (test) { game.incomeManager.levelUp(property); }
+  let data = {
+    credits: game.player.credits,
+    property: property,
+    successful: test
+  }
+  res.send(data);
+});
+
 app.post('/runtick', xHeader, (req, res) => {
   game.calculateTick();
+  // Only need partial data sent back
   res.send({
     credits: game.player.credits,
-    turns: game.turns
+    turns: game.turns,
+    distance: game.distance
   });
 });
 

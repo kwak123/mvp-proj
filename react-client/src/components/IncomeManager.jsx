@@ -14,6 +14,7 @@ var IncomeManager = (props) => {
         {names.map((a, i) => <IncomeGenerator 
           key={i} 
           handlePurchase={props.handlePurchase} 
+          handleLevelup={props.handleLevelup}
           name={a[0]} 
           count={a[1]}/>)}
       </ul>
