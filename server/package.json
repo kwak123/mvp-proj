@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "mocha --bail test/gameTests/units.js",
     "test:es6": "mocha --compilers js:babel-register --bail test/gameTests/units.js"
   },
