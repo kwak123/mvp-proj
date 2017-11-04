@@ -9,7 +9,6 @@ var environment = require('./game/Environment');
 var initialize = require('./initialize');
 var Game = require('./game/Game');
 var Ship = require('./game/Ship');
-var db = require('./db/config');
 
 // Default headers
 const HEADER = {
@@ -157,5 +156,5 @@ app.post('/runtick', xHeader, (req, res) => {
 app.options('/*', xHeader, (req, res) => {
   res.sendStatus(200);
 });
-
-app.listen(3001, () => console.log('now listening on 3001'));
+app.set('port', (process.env.PORT || 5000))
+app.listen(app.get('port'), () => console.log('now listening on', app.get('port')));
