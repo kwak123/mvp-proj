@@ -32,7 +32,7 @@ let initStarships = () => {
             name: a.name
           };
         });
-      environment.STARSHIPS = pruned;
+      environment.STARSHIPS = pruned.sort((a, b) => a.cost - b.cost);
     });
 };
 

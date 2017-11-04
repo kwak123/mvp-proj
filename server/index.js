@@ -85,6 +85,7 @@ app.post('/starship', xHeader, (req, res) => {
   let test = game.spendCredits(-ship.cost);
   if (test) { game.starship = ship; }
   res.send({
+    credits: game.player.credits,
     starship: game.starship,
     successful: !!test
   });

@@ -102,6 +102,7 @@ class Game extends React.Component {
     .then((response) => {
       if (!response.data.successful) { alert(`you can't afford to buy ${shipName}`); }
       this.setState({
+        credits: response.data.credits,
         starship: response.data.starship
       });
     })
@@ -129,7 +130,7 @@ class Game extends React.Component {
       <Control 
         player={this.state.player}
         credits={this.state.credits}
-        starship={this.state.starship.name}
+        starship={this.state.starship}
         handlePurchase={this.handlePurchase}
         handleLevelup={this.handleLevelup} 
         handleShipPurchase={this.handleShipPurchase}
