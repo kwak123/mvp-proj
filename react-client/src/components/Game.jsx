@@ -12,7 +12,8 @@ class Game extends React.Component {
       credits: 0,
       gameStart: false,
       hideNewPlayer: true,
-      generators: []
+      generators: [],
+      turns: 0
     };
     this.startNewGame = this.startNewGame.bind(this);
     this.setPlayerData = this.setPlayerData.bind(this);
@@ -40,7 +41,8 @@ class Game extends React.Component {
         player: data,
         generators: response.data.generators,
         credits: response.data.credits,
-        hideNewPlayer: true
+        hideNewPlayer: true,
+        turns: response.data.turns
       });
     })
     .catch((err) => console.log(err));
@@ -66,7 +68,8 @@ class Game extends React.Component {
     axios.post('http:localhost:3001/runtick')
       .then((response) => {
         this.setState({
-          credits: response.data.credits
+          credits: response.data.credits,
+          turns: response.data.turns
         });
       });
   }
@@ -81,11 +84,12 @@ class Game extends React.Component {
         {newPlayer}
         {this.state.player && 
           <Control 
-            player={this.state.player} 
-            credits={this.state.credits} 
+            player={this.state.player}
+            credits={this.state.credits}
             handlePurchase={this.handlePurchase} 
             generators={this.state.generators} />}   
         {this.state.gameStart && this.state.hideNewPlayer ? <button onClick={this.runTick}>End turn</button> : null}
+        {this.state.gameStart && this.state.hideNewPlayer ? <p>Turns: {this.state.turns}</p> : null}
       </div>
     )
   }

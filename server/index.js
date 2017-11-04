@@ -59,7 +59,8 @@ app.get('/', xHeader, (req, res) => {
 app.get('/new', xHeader, (req, res) => {
   let data = {
     generators: [],
-    credits: game.player.credits
+    credits: game.player.credits,
+    turns: game.turns
   };
   for (let key in game.incomeManager.properties) {
     let holder = {};
@@ -92,7 +93,6 @@ app.post('/purchase', xHeader, (req, res) => {
   let property = req.body.property;
   let cost = game.incomeManager.fetchCost(property);
   let test = game.spendCredits(-cost);
-  console.log(test);
   if (test) { game.incomeManager.purchase(property); }
   let data = {
     credits: game.player.credits,
@@ -106,7 +106,8 @@ app.post('/purchase', xHeader, (req, res) => {
 app.post('/runtick', xHeader, (req, res) => {
   game.calculateTick();
   res.send({
-    credits: game.player.credits
+    credits: game.player.credits,
+    turns: game.turns
   });
 });
 

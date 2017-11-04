@@ -5,6 +5,7 @@ module.exports = class Game {
   constructor(username, species) {
     this.player = new Player(username, species);
     this.incomeManager = new IncomeManager();
+    this.turns = 0;
   }
 
   setShip(ship) {
@@ -21,6 +22,7 @@ module.exports = class Game {
   }
 
   calculateTick() {
+    this.turns++;
     this.player.credits += this.incomeManager.calculateIncome();
   }
 

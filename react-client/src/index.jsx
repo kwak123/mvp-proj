@@ -31,7 +31,11 @@ class App extends React.Component {
     return (
     <div>
       <h1>Ster Wers (Don't sue me Disney)</h1>
-      <Game species={this.state.species} />
+      <Game 
+        planets={this.state.planets}
+        starships={this.state.starships}
+        people={this.state.people}
+        species={this.state.species} />
     </div>)
   }
 }
