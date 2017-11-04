@@ -21,13 +21,15 @@ class Game extends React.Component {
       gameStart: false,
       hideNewPlayer: true,
       generators: [],
-      turns: 0
+      turns: 0,
+      finished: false
     };
     this.startNewGame = this.startNewGame.bind(this);
     this.setPlayerData = this.setPlayerData.bind(this);
     this.handlePurchase = this.handlePurchase.bind(this);
     this.handleLevelup = this.handleLevelup.bind(this);
     this.handleShipPurchase = this.handleShipPurchase.bind(this);
+    this.handleModulePurchase = this.handleModulePurchase.bind(this);
     this.runTick = this.runTick.bind(this);
   }
 
@@ -78,6 +80,7 @@ class Game extends React.Component {
   }
 
   handleLevelup(property) {
+    if (property === 'KingpinSeamus') { return alert('... why'); }
     axios.post(defaults.BASE_URL + '/levelup', {
       property: property
     })
@@ -109,13 +112,18 @@ class Game extends React.Component {
     .catch((err) => console.log(err));
   }
 
+  handleModulePurchase() {
+    
+  }
+
   runTick() {
     axios.post(defaults.BASE_URL + '/runtick')
       .then((response) => {
         this.setState({
           credits: response.data.credits,
           turns: response.data.turns,
-          distance: response.data.distance
+          distance: response.data.distance,
+          finished: response.data.finished
         });
       });
   }
@@ -134,6 +142,7 @@ class Game extends React.Component {
         handlePurchase={this.handlePurchase}
         handleLevelup={this.handleLevelup} 
         handleShipPurchase={this.handleShipPurchase}
+        handleModulePurchase={this.handleModulePurchase}
         generators={this.state.generators}
         starships={this.props.starships} /> : null;
     let main = this.state.player ?
@@ -141,14 +150,26 @@ class Game extends React.Component {
         planet={this.state.planet.name}
         distance={this.state.distance} /> : null;
 
+    if (this.state.finished) {
+      return (
+        <div>
+          <h1>You won! If only there were a way to save your score... blame lazy developer</h1>
+        </div>
+      )
+    }
     return (
-      <div>
+      <div style={{'marginLeft': 12}}>
         {newGameButton}        
         {newPlayer}
         {main}
         {control}  
-        {this.state.gameStart && this.state.hideNewPlayer ? <button onClick={this.runTick}>End turn</button> : null}
-        {this.state.gameStart && this.state.hideNewPlayer ? <p>Turns: {this.state.turns}</p> : null}
+        <div style={{'float': 'left', 'margin': '4px 4px 4px 8px'}}>
+          {this.state.gameStart && this.state.hideNewPlayer ? 
+            <button onClick={this.runTick}>End turn</button> : null}
+          {this.state.gameStart && this.state.hideNewPlayer ? 
+            <p>Turns: {this.state.turns}</p> : null}
+        </div>
+        
       </div>
     )
   }

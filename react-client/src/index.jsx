@@ -30,8 +30,9 @@ class App extends React.Component {
   render () {
     return (
     <div>
-      <h1>Ster Wers (Don't sue me Disney)</h1>
-      <Game 
+      <h1 style={{'margin': 10}}>Ster Wers (Don't sue me Disney)</h1>
+      <h2 style={{'margin': '-10px 0px 40px 10px'}}>Truly Imbalanced Gameplay</h2>
+      <Game
         planets={this.state.planets}
         starships={this.state.starships}
         people={this.state.people}

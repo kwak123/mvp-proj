@@ -2,12 +2,13 @@ var app = require('express')();
 var http = require('http');
 var bodyparser = require('body-parser');
 var request = require('request');
+var path = require('path');
 
 var handler = require('./api/SwapiHandler');
 var environment = require('./game/Environment');
 var initialize = require('./initialize');
 var Game = require('./game/Game');
-// var io = require('socket.io')() - someday
+var Ship = require('./game/Ship');
 
 // Default headers
 const HEADER = {
@@ -67,9 +68,11 @@ app.get('/player', xHeader, (req, res) => {
 });
 
 app.post('/new', xHeader, (req, res) => {
-  game = new Game(req.body.username, req.body.species, environment.PLANETS[0]);
+  let planetIdx = Math.floor(Math.random() * environment.PLANETS.length);
+  game = new Game(req.body.username, req.body.species, environment.PLANETS[planetIdx]);
   if (req.body.username === 'sam') {
     game.player.credits = 1000000000;
+    game.starship.mglt = 1000;
   }
   res.sendStatus(game ? 200 : 400);
 });
@@ -81,7 +84,7 @@ app.post('/player', xHeader, (req, res) => {
 
 app.post('/starship', xHeader, (req, res) => {
   let newShipName = req.body.name;
-  let ship = environment.STARSHIPS.find((a) => a.name === newShipName);
+  let ship = new Ship(environment.STARSHIPS.find((a) => a.name === newShipName));
   let test = game.spendCredits(-ship.cost);
   if (test) { game.starship = ship; }
   res.send({
@@ -122,11 +125,13 @@ app.post('/levelup', xHeader, (req, res) => {
 
 app.post('/runtick', xHeader, (req, res) => {
   game.calculateTick();
+  let finished = false;
   // Only need partial data sent back
   res.send({
     credits: game.player.credits,
     turns: game.turns,
-    distance: game.distance
+    distance: game.distance,
+    finished: game.finished
   });
 });
 

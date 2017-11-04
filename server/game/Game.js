@@ -15,6 +15,7 @@ module.exports = class Game {
     this.starship = new Ship(defaultShip);
     this.incomeManager = new IncomeManager();
     this.planet = planet;
+    this.finished = false;
     this.distance = planet.diameter;
     this.turns = 0;
   }
@@ -36,6 +37,9 @@ module.exports = class Game {
     this.turns++;
     this.player.credits += this.incomeManager.calculateIncome();
     this.distance -= this.starship.mglt;
+    if (this.distance <= 0) {
+      this.finished = true;
+    }
   }
 
   fetchData() {
