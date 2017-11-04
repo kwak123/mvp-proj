@@ -82,7 +82,7 @@ app.post('/player', xHeader, (req, res) => {
 app.post('/starship', xHeader, (req, res) => {
   let newShipName = req.body.name;
   let ship = environment.STARSHIPS.find((a) => a.name === newShipName);
-  let test = game.spendCredits(-1*(ship.cost)) >= 0;
+  let test = game.spendCredits(-ship.cost);
   if (test) { game.starship = ship; }
   res.send({
     starship: game.starship,
@@ -112,6 +112,8 @@ app.post('/levelup', xHeader, (req, res) => {
   let data = {
     credits: game.player.credits,
     property: property,
+    level: game.incomeManager.fetchLevel(property),
+    output: game.incomeManager.fetchOutput(property),
     successful: test
   }
   res.send(data);

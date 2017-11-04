@@ -1,23 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    let divStyle = {
-      'height': 120
-    }
-    return (
-      <div style={divStyle}>
-        <h1>Remaining distance</h1>
-        <p>{this.props.planet}</p>
-        <p>{this.props.distance}</p>
+var Main = (props) => (
+      <div style={{'height': 120}}>
+        <h4>Get there ASAP</h4>
+        <h2>Destination: {props.planet}</h2>
+        <h3>Remaining distance: {props.distance}</h3>
       </div>
-    )
-  }
-}
+);
 
 export default Main;

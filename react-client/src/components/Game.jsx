@@ -27,6 +27,7 @@ class Game extends React.Component {
     this.setPlayerData = this.setPlayerData.bind(this);
     this.handlePurchase = this.handlePurchase.bind(this);
     this.handleLevelup = this.handleLevelup.bind(this);
+    this.handleShipPurchase = this.handleShipPurchase.bind(this);
     this.runTick = this.runTick.bind(this);
   }
 
@@ -83,8 +84,25 @@ class Game extends React.Component {
     .then((response) => {
       if (!response.data.successful) { alert(`you can't afford to upgrade ${property}`); }
       // Fetch up the level of the generators too
+      let currGen = this.state.generators.slice();
+      currGen.find((a) => a.name === property).level = response.data.level;
+      currGen.find((a) => a.name === property).output = response.data.output;
       this.setState({
-        credits: response.data.credits || 0
+        credits: response.data.credits || 0,
+        generators: currGen
+      });
+    })
+    .catch((err) => console.log(err));
+  }
+
+  handleShipPurchase(shipName) {
+    axios.post(defaults.BASE_URL + '/starship', {
+      name: shipName
+    })
+    .then((response) => {
+      if (!response.data.successful) { alert(`you can't afford to buy ${shipName}`); }
+      this.setState({
+        starship: response.data.starship
       });
     })
     .catch((err) => console.log(err));
@@ -114,6 +132,7 @@ class Game extends React.Component {
         starship={this.state.starship.name}
         handlePurchase={this.handlePurchase}
         handleLevelup={this.handleLevelup} 
+        handleShipPurchase={this.handleShipPurchase}
         generators={this.state.generators}
         starships={this.props.starships} /> : null;
     let main = this.state.player ?

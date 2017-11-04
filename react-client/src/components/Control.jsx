@@ -7,11 +7,13 @@ var Control = (props) => (
       <PlayerInfo 
         player={props.player} 
         credits={props.credits} 
-        starship={props.starship}/>
+        starship={props.starship}
+        starships={props.starships}
+        handleShipPurchase={props.handleShipPurchase} />
       <IncomeManager 
         handlePurchase={props.handlePurchase} 
         handleLevelup={props.handleLevelup}
-        generators={props.generators}/>
+        generators={props.generators} />
     </div>
 );
 
