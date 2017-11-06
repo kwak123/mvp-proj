@@ -4,10 +4,6 @@ import NewPlayer from './NewPlayer.jsx';
 import Control from './Control.jsx';
 import Main from './Main.jsx';
 
-const defaults = {
-  BASE_URL: 'http:localhost:3001'
-}
-
 class Game extends React.Component {
 
   constructor(props) {
